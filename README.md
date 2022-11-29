@@ -1,14 +1,13 @@
-# Template Extension Specification
+# Locale Extension Specification
 
-- **Title:** Template
+- **Title:** Locale
 - **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json>
-- **Field Name Prefix:** template
+- **Field Name Prefix:** locale
 - **Scope:** Item, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @your-gh-handles @person2
+- **Owner**: @jkeifer
 
-This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-This is the place to add a short introduction.
+This document explains the Locale Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification. Allows specifying properties specific to the local area represented in the item or collection.
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -25,36 +24,23 @@ The fields in the table below can be used in these parts of STAC documents:
 - [x] Assets (for both Collections and Items, incl. Item Asset Definitions in Collections)
 - [ ] Links
 
-| Field Name           | Type                      | Description |
-| -------------------- | ------------------------- | ----------- |
-| template:new_field   | string                    | **REQUIRED**. Describe the required field... |
-| template:xyz         | [XYZ Object](#xyz-object) | Describe the field... |
-| template:another_one | \[number]                 | Describe the field... |
+| Field Name                | Type    | Description                                            |
+| ------------------------- | ------- | ------------------------------------------------------ |
+| locale:datetime           | string  | `datetime` in the local timezone.                      |
+| locale:start_datetime     | string  | `start_datetime` in the local timezone.                |
+| locale:end_datetime       | string  | `end_datetime` in the local timezone.                  |
+| locale:tz_offset          | float   | Local timezone offset at `datetime`.                   |
+| locale:solar_zenith       | float   | Sun angle relative to the horizon at `datetime`.       |
+| locale:start_solar_zenith | float   | Sun angle relative to the horizon at `start_datetime`. |
+| locale:end_solar_zenith   | float   | Sun angle relative to the horizon at `end_datetime`.   |
 
-### Additional Field Information
+All timestamps MUST be formatted according to RFC 3339, section 5.6.
 
-#### template:new_field
+The timestamps have different meaning depending on where they are used.
+If those fields are available in the Item properties, it's referencing to the timestamps valid for of the metadata.
+Having those fields in the Item assets refers to the timestamps valid for the actual data linked to in the Asset Object.
 
-This is a much more detailed description of the field `template:new_field`...
-
-### XYZ Object
-
-This is the introduction for the purpose and the content of the XYZ Object...
-
-| Field Name  | Type   | Description |
-| ----------- | ------ | ----------- |
-| x           | number | **REQUIRED**. Describe the required field... |
-| y           | number | **REQUIRED**. Describe the required field... |
-| z           | number | **REQUIRED**. Describe the required field... |
-
-## Relation types
-
-The following types should be used as applicable `rel` types in the
-[Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
-
-| Type                | Description |
-| ------------------- | ----------- |
-| fancy-rel-type      | This link points to a fancy resource. |
+All values are assumed to be derived from the item's centroid unless otherwise documented.
 
 ## Contributing
 
